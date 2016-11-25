@@ -32,3 +32,33 @@ end
 arr = [0, 1, 5, 7]
 p two_sum2?(arr, 6) # => should be true
 p two_sum2?(arr, 10) # => should be false
+
+def sum_rec?(n, arr, target_sum)
+  hash = Hash.new(false)
+
+  arr.each do |el|
+    hash[el] = true
+  end
+
+  return true if n == 1 && hash[target_sum]
+
+  arr.each_with_index do |el, idx|
+    arr_dup = arr.dup
+    arr_dup.delete_at(idx)
+    target = target_sum - el
+    next if target == el
+    return true if sum_rec?(n - 1, arr_dup, target)
+  end
+  false
+end
+
+p 'recursion sums'
+arr = [0, 1, 5, 7, 3, 2, 10 , 2000 , 254]
+p 'should be false'
+p sum_rec?(4, arr, 1000000)
+p '6?'
+p sum_rec?(2, arr, 6)
+p '17?'
+p sum_rec?(4, arr, 17)
+p '2011?'
+p sum_rec?(4, arr, 2011)
